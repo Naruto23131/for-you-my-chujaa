@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Will You become mine?</title>
+  <style>
+    body {
+      /* Lovely gradient background */
+      background: linear-gradient(135deg, #ffe0e6 0%, #ffd6e0 50%, #f7b2b7 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+    h1 {
+      color: #d72660;
+      font-size: 2.8em;
+      text-shadow: 0 2px 16px #fff, 0 0px 8px #d72660;
+      animation: fadeIn 1s;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 14px 38px;
+      margin: 20px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(90deg, #d72660 60%, #ffb6b9 100%);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 16px rgba(215,38,96,0.15);
+      font-weight: 600;
+      outline: none;
+      position: relative;
+      z-index: 2;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #a91b4a 60%, #ffb6b9 100%);
+      transform: scale(1.1) rotate(-3deg);
+      box-shadow: 0 8px 32px rgba(215,38,96,0.25), 0 0 16px #fff;
+    }
+    #response {
+      font-size: 1.5em;
+      color: #d72660;
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 0.7s;
+      text-shadow: 0 2px 8px #fff;
+      min-height: 2em;
+    }
+    #response.show {
+      opacity: 1;
+    }
+    #heart-img {
+      display: none;
+      margin: 30px auto 0;
+      width: 80px;
+      animation: pop 0.7s;
+      filter: drop-shadow(0 0 16px #ffb6b9);
+    }
+    #gift-box {
+      display: none;
+      width: 90px;
+      margin: 30px auto 0;
+      cursor: pointer;
+      animation: pop 0.7s;
+      filter: drop-shadow(0 0 16px #ffb6b9);
+    }
+    #open-gift-btn {
+      display: none;
+      margin-top: 10px;
+      font-size: 1.1em;
+      padding: 10px 28px;
+      border-radius: 18px;
+      border: none;
+      background: #ffb6b9;
+      color: #d72660;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #ffd6e0;
+      transition: background 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes pop {
+      0% { transform: scale(0.5);}
+      70% { transform: scale(1.2);}
+      100% { transform: scale(1);}
+    }
+    /* Heart animation background */
+    .heart {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center/contain;
+      opacity: 0.7;
+      animation: floatHeart 6s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes floatHeart {
+      0% { transform: translateY(100vh) scale(0.8) rotate(0deg);}
+      100% { transform: translateY(-10vh) scale(1.2) rotate(360deg);}
+    }
+    /* Glowing border for buttons */
+    button:focus {
+      box-shadow: 0 0 0 4px #ffb6b9, 0 0 16px #d72660;
+    }
+  </style>
+</head>
+<body>
+  <!-- Heart background container -->
+  <div id="hearts-bg"></div>
+  <!-- Girl's photo -->
+  <img src="https://example.com/girl.jpg" alt="Her Photo" style="width:120px; border-radius:50%; margin-bottom:25px; box-shadow:0 4px 24px #ffd6e0;">
+  <h1>Will you become mine? 💖</h1>
+  <button id="yes-btn" onclick="reply('yes')">Yes</button>
+  <button id="no-btn" onclick="reply('no')">No</button>
+  <div id="response"></div>
+  <img id="heart-img" src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Heart">
+  <img id="gift-box" src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Gift Box" style="display:none; width:90px; margin:30px auto 0; cursor:pointer; animation: pop 0.7s; filter: drop-shadow(0 0 16px #ffb6b9);">
+  <button id="open-gift-btn" style="display:none; margin-top:10px; font-size:1.1em; padding:10px 28px; border-radius:18px; border:none; background:#ffb6b9; color:#d72660; font-weight:600; cursor:pointer; box-shadow:0 2px 8px #ffd6e0; transition:background 0.3s;">Press to open</button>
+  <div id="poetry" style="display:none; font-size:1.3em; color:#a91b4a; margin-top:30px; max-width:500px; margin-left:auto; margin-right:auto; line-height:1.5; text-shadow:0 2px 8px #fff; opacity:0; transition:opacity 1s;">
+    <!-- Poetry will be inserted here -->
+  </div>
+  <script>
+    // Heart background animation
+    function createHearts() {
+      const container = document.getElementById('hearts-bg');
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDelay = (Math.random() * 6) + 's';
+        heart.style.opacity = 0.5 + Math.random() * 0.5;
+        container.appendChild(heart);
+      }
+    }
+    createHearts();
+
+    // Reasons for "No" button
+    const noReasons = [
+      "I'm too shy! 😳",
+      "I need more time to think! ⏳",
+      "Are you sure you want me? 🤔",
+      "My heart says yes, but my mind says wait! 💭",
+      "I can't resist your charm! 😍",
+      "Oops, my finger slipped! 😅",
+      "Try asking again, maybe I'll say yes! 😉",
+      "You're making it hard to say no! 🥺",
+      "I want to, but... butterflies! 🦋",
+      "You deserve a yes! 💖",
+      "I'm just teasing you! 😜",
+      "No, but only because I want you to ask again! 💌"
+    ];
+    let noClickCount = 0;
+
+    function reply(answer) {
+      const response = document.getElementById('response');
+      const heartImg = document.getElementById('heart-img');
+      const noBtn = document.getElementById('no-btn');
+      const yesBtn = document.getElementById('yes-btn');
+      const poetry = document.getElementById('poetry');
+      const giftBox = document.getElementById('gift-box');
+      const openGiftBtn = document.getElementById('open-gift-btn');
+      response.classList.remove('show');
+      heartImg.style.display = 'none';
+      poetry.style.display = 'none';
+      poetry.style.opacity = 0;
+      giftBox.style.display = 'none';
+      openGiftBtn.style.display = 'none';
+
+      if (answer === 'no') {
+        // Move "No" button to a random position
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 120) + 80;
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+        // Show a new reason
+        response.textContent = noReasons[noClickCount % noReasons.length];
+        noClickCount++;
+      } else {
+        // Reset "No" button position
+        noBtn.style.position = 'static';
+        noBtn.style.left = '';
+        noBtn.style.top = '';
+        response.textContent = "Yay! You made my day! 😊";
+        heartImg.style.display = 'block';
+        // Hide buttons
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+        // Show gift box and open button
+        giftBox.style.display = 'block';
+        openGiftBtn.style.display = 'inline-block';
+      }
+      setTimeout(() => {
+        response.classList.add('show');
+      }, 200);
+    }
+
+    // Show Hindi poetry when "Press to open" is clicked
+    document.getElementById('open-gift-btn').onclick = function() {
+      const poetry = document.getElementById('poetry');
+      document.getElementById('gift-box').style.display = 'none';
+      this.style.display = 'none';
+      poetry.innerHTML = `
+        <span style="font-size:1.5em;">🎁💖</span><br>
+        तेरी मुस्कान में है जादू सा कोई,<br>
+        दिल को छू जाती है तेरी हर बात कोई।<br>
+        तेरे साथ हर लम्हा है खास,<br>
+        तुझसे ही है मेरा हर एहसास।<br>
+        <br>
+        चलो साथ चलें इस प्यार की राह में,<br>
+        तेरा हाथ थामे, तेरी बाहों में।<br>
+        <span style="font-size:1.5em;">🌹</span>
+      `;
+      poetry.style.display = 'block';
+      setTimeout(() => {
+        poetry.style.opacity = 1;
+      }, 300);
+    };
+  </script>
+</body>
+</html>
